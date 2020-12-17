@@ -1,0 +1,128 @@
+docker run -p 8181:8181 --net opa-nw openpolicyagent/opa:latest run --server --log-level debug
+
+curl --request GET \
+    --url http://localhost:8000
+
+curl --request GET \
+    --header 'authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhNbmUtMWUyTW5vdUNFeHBlUV9UUiJ9.eyJpc3MiOiJodHRwczovL2p2LW9wYS5hdS5hdXRoMC5jb20vIiwic3ViIjoiMnZ4bG9OaDhKUGpUeXpjcGFST1ZtdkZmQjhBWkxiWk9AY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9idXNpbmVzcy1hcGkwMSIsImlhdCI6MTYwODE3NTA1NSwiZXhwIjoxNjA4MjYxNDU1LCJhenAiOiIydnhsb05oOEpQalR5emNwYVJPVm12RmZCOEFaTGJaTyIsInNjb3BlIjoicmVhZDpkYXRhIHdyaXRlOmRhdGEiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.gF0SSpUwrzMXpy_pzXi_62MqZCOihgn4m5XDuIt8_WYYXABaAhn8GM8BV5EyxyFABOQwKPg9ynXOsxXAAPboLE-cfvWfYbiE6kxG_K16vhhuy0AfZIhbFFBnNNSqlZ5A2L4U9kVTA6hTvVEXetBW3tN265IlBzMK68-3n73YYUM7ZXcFmlRy2KggTWVdSSmmR-B4nxuY9PpZyAMtPJjHtRTVffrlvM-dZID2h2HHoEpkmAjaxHdg1wiLaSg2dq-mVg0BiqcvZHtq5FSGe4FWCJRXNXbMX2EPNGu7QfPoENRpSUc540bb4_Jy4nczmY80MxXmKIIKTB_4cUvfFqquKA' \
+    --url http://localhost:8000/api/v1/cocacola/upload_tokens
+
+export AT=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhNbmUtMWUyTW5vdUNFeHBlUV9UUiJ9.eyJpc3MiOiJodHRwczovL2p2LW9wYS5hdS5hdXRoMC5jb20vIiwic3ViIjoiMnZ4bG9OaDhKUGpUeXpjcGFST1ZtdkZmQjhBWkxiWk9AY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9idXNpbmVzcy1hcGkwMSIsImlhdCI6MTYwODE3ODE4OSwiZXhwIjoxNjA4MjY0NTg5LCJhenAiOiIydnhsb05oOEpQalR5emNwYVJPVm12RmZCOEFaTGJaTyIsInNjb3BlIjoiZGVsZXRlOnRlbmFudCBjcnVkOnJlc291cmNlIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.AHiM1vllVeDgzXHhpS7cJU-2sCg3H3aQG7yC2GJttwPkpUYL75aFJvxUK4Ke_oeqmaxCNXrK4R48766yIV-yzqGsWGRmE4dSQB08cdFrANlEZ_k8SZks0cUgdMD4G_Py2cHjbS2oXK04tNydTRpeL_iGAmLT5k0iR5IdkpLD8PDDBuQygUGtCnji7N4Sw3aG0huakpDo3m27SB5g3ti1UMmycjSD620mrB_NaLTP3LJCMlqzSRCvcxMQT_ChFFxDQAJl2SUvNys43SQX5ZmN_X3nRGMKZsy33tUd6qw4H7eWgJCvVJt6vAEHxYzMTSIDb-olgzo5Wc1K9MbPNNFOjA
+
+curl --request GET \
+    --header 'authorization: Bearer '"$AT"'' \
+    --url http://localhost:8000/api/v1/cocacola/upload_token
+
+
+test_admin_can_list_content_routes_for_tenant {
+    allow with input as {
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBMdDByckZ3WEx5UHliVjQtNUQ3NiJ9.eyJpc3MiOiJodHRwczovL2p2LWRlbW8uYXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVjYzhlNDMzNjg0NzgxMGU3NTFhYThjZSIsImF1ZCI6Imh0dHBzOi8vZGVtby1kdW1teS1hcGkuanYtZGVtby5jb20iLCJpYXQiOjE2MDc1NzY3OTcsImV4cCI6MTYwNzY2MzE5NywiYXpwIjoieUQzME5VTmtaU3FjQXA3Z2k4YncyR1ByZ2xjdDA4R0oiLCJzY29wZSI6InJlYWQ6ZGVtbyB3cml0ZTpkZW1vIGp1bms6anVuayBhdXRoOmNvbmZsdWVuY2UtdXNlciBvZmZsaW5lX2FjY2VzcyIsImd0eSI6InBhc3N3b3JkIn0.kkvD7NjkMIVfmHMbjwdYDKClFpmlnF8L_x12VzR7gnzY8C9WjIW4ryx5cCR-ofzUhxfgi7rav2tB2fGqN6P4Tasn27YNtFM0QxU3PYzDRx6OUfWOz9qFSPlYedMRrbpsO_J0VZhdQlqGNtx_PWiwRMZIXxudYisBfgKh_jlxt5boptn8nfTVAua-DYpIB_2TfVKDgkSMEQrubMo_S-SlIavB7rok7rpBJOYKYyHBiN-XYaKooweAfkadg-I6lABRyFV7qIQZxmhv9odOK1s3I97O3kBwDsH6gGzttfJqlgD8Q7kUEUxGYpVXDIPlLGZGYB6BpVRFwtgoFbwJIRNM0w",
+        "action": "list",
+        "resource": "content_route",
+        "tenant": "cocacola"
+    }
+}
+
+test_user_canNOT_list_content_routes_for_tenant {
+    not allow with input as {
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBMdDByckZ3WEx5UHliVjQtNUQ3NiJ9.eyJpc3MiOiJodHRwczovL2p2LWRlbW8uYXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNzE2ZDcxNDhkZTlmMGNhMTI1NzI1MiIsImF1ZCI6Imh0dHBzOi8vZGVtby1kdW1teS1hcGkuanYtZGVtby5jb20iLCJpYXQiOjE2MDc1NzY5NTQsImV4cCI6MTYwNzY2MzM1NCwiYXpwIjoieUQzME5VTmtaU3FjQXA3Z2k4YncyR1ByZ2xjdDA4R0oiLCJzY29wZSI6InJlYWQ6ZGVtbyB3cml0ZTpkZW1vIGp1bms6anVuayBhdXRoOmNvbmZsdWVuY2UtdXNlciBvZmZsaW5lX2FjY2VzcyIsImd0eSI6InBhc3N3b3JkIn0.XhSFDPAWvA7-GT405P62UPzU3ZJNK_RyNRKfVsKmjX37lA-dLvEoZlywcAeEdpgmRR_n9-ggpILjUhOFww7TP3ph4bZOupvD7OfVdIBWJo3-S8PnUpnEWZ1QepVppTFHjzKg_X7cedLPFc5LRO86IQY6yNX2pnrT3h25WIRGrDeLPRZYnyYabMzsTtVLtsYVF0MoFycFqsZUYq3EtSOiPjVWCnB5RWhhYnOZYAEwH99c_bhUoxxjklpm_kpHQI8jhpLCpFdWyz1wH8Af1YpmdU8NLZoG7kqrnypHFIaixaikLn7DEHVP4IL8vATPjnRVO43gaTH9dr7WC3uICDhETA",
+        "action": "list",
+        "resource": "content_route",
+        "tenant": "chevrolet"
+    }
+}
+
+test_user_can_validate_token_for_tenant {
+    allow with input as {
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBMdDByckZ3WEx5UHliVjQtNUQ3NiJ9.eyJpc3MiOiJodHRwczovL2p2LWRlbW8uYXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNzE2ZDcxNDhkZTlmMGNhMTI1NzI1MiIsImF1ZCI6Imh0dHBzOi8vZGVtby1kdW1teS1hcGkuanYtZGVtby5jb20iLCJpYXQiOjE2MDc1NzY5NTQsImV4cCI6MTYwNzY2MzM1NCwiYXpwIjoieUQzME5VTmtaU3FjQXA3Z2k4YncyR1ByZ2xjdDA4R0oiLCJzY29wZSI6InJlYWQ6ZGVtbyB3cml0ZTpkZW1vIGp1bms6anVuayBhdXRoOmNvbmZsdWVuY2UtdXNlciBvZmZsaW5lX2FjY2VzcyIsImd0eSI6InBhc3N3b3JkIn0.XhSFDPAWvA7-GT405P62UPzU3ZJNK_RyNRKfVsKmjX37lA-dLvEoZlywcAeEdpgmRR_n9-ggpILjUhOFww7TP3ph4bZOupvD7OfVdIBWJo3-S8PnUpnEWZ1QepVppTFHjzKg_X7cedLPFc5LRO86IQY6yNX2pnrT3h25WIRGrDeLPRZYnyYabMzsTtVLtsYVF0MoFycFqsZUYq3EtSOiPjVWCnB5RWhhYnOZYAEwH99c_bhUoxxjklpm_kpHQI8jhpLCpFdWyz1wH8Af1YpmdU8NLZoG7kqrnypHFIaixaikLn7DEHVP4IL8vATPjnRVO43gaTH9dr7WC3uICDhETA",
+        "action": "validate",
+        "resource": "token",
+        "tenant": "chevrolet"
+    }
+}
+
+test_poweruser_can_upload_token_for_tenant {
+    allow with input as {
+        "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjBMdDByckZ3WEx5UHliVjQtNUQ3NiJ9.eyJpc3MiOiJodHRwczovL2p2LWRlbW8uYXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVjYzhlNDMzNjg0NzgxMGU3NTFhYThjZSIsImF1ZCI6Imh0dHBzOi8vZGVtby1kdW1teS1hcGkuanYtZGVtby5jb20iLCJpYXQiOjE2MDc1NzY3OTcsImV4cCI6MTYwNzY2MzE5NywiYXpwIjoieUQzME5VTmtaU3FjQXA3Z2k4YncyR1ByZ2xjdDA4R0oiLCJzY29wZSI6InJlYWQ6ZGVtbyB3cml0ZTpkZW1vIGp1bms6anVuayBhdXRoOmNvbmZsdWVuY2UtdXNlciBvZmZsaW5lX2FjY2VzcyIsImd0eSI6InBhc3N3b3JkIn0.kkvD7NjkMIVfmHMbjwdYDKClFpmlnF8L_x12VzR7gnzY8C9WjIW4ryx5cCR-ofzUhxfgi7rav2tB2fGqN6P4Tasn27YNtFM0QxU3PYzDRx6OUfWOz9qFSPlYedMRrbpsO_J0VZhdQlqGNtx_PWiwRMZIXxudYisBfgKh_jlxt5boptn8nfTVAua-DYpIB_2TfVKDgkSMEQrubMo_S-SlIavB7rok7rpBJOYKYyHBiN-XYaKooweAfkadg-I6lABRyFV7qIQZxmhv9odOK1s3I97O3kBwDsH6gGzttfJqlgD8Q7kUEUxGYpVXDIPlLGZGYB6BpVRFwtgoFbwJIRNM0w",
+        "action": "upload",
+        "resource": "token",
+        "tenant": "abercrombie"
+    }
+}
+
+### ... 'POST' 'upload_token' for an entitled 'tenant' 
+allow {
+    some tenant
+    some resource
+    input.path = ["api", "v1", tenant, resource]
+    
+    is_post_method
+    resource == "upload_token"
+
+    some i
+    tenant == data.user_tenants[claims.sub][i].tenant
+    data.user_tenants[claims.sub][i].role == "admin"
+}
+
+### ... 'GET' 'content_route' for an entitled 'tenant' 
+allow {
+    some tenant
+    some resource
+    input.path = ["api", "v1", tenant, resource]
+    
+    is_get_method
+    resource == "content_route"
+
+    some i
+    tenant == data.user_tenants[claims.sub][i].tenant
+    data.user_tenants[claims.sub][i].role == "admin"
+}
+
+### 'GET' 'content_route' for an entitled 'tenant' 
+allow {
+    some tenant
+    some resource
+    input.path = ["api", "v1", tenant, resource]
+    
+    is_get_method
+    resource == "content_route"
+
+    some i
+    tenant == data.user_tenants[claims.sub][i].tenant
+    data.user_tenants[claims.sub][i].role == "admin"
+}
+
+allow {
+    input.action == "upload"
+    input.resource == "tokens"
+
+    some i
+    input.tenant == data.user_tenants[claims.sub][i].tenant
+    data.user_tenants[claims.sub][i].role == "admin"
+}
+
+allow {
+    input.action == "upload"
+    input.resource == "token"
+
+    some i
+    input.tenant == data.user_tenants[claims.sub][i].tenant
+    data.user_tenants[claims.sub][i].role == "poweruser"
+}
+
+allow {
+    input.action == "index"
+    input.resource == "vpc"
+
+    some i
+    input.tenant == data.user_tenants[claims.sub][i].tenant
+    data.user_tenants[claims.sub][i].role == "admin"
+}
+
+allow {
+    input.action == "validate"
+    input.resource == "token"
+
+    some i
+    input.tenant == data.user_tenants[claims.sub][i].tenant
+}
