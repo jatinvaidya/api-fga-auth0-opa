@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "jatin.vaidya@gmail.com",
   "license": "ISC",
   "dependencies": {
     "@build-security/opa-express-middleware": "0.0.2",
