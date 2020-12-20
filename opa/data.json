@@ -1,6 +1,6 @@
 {
     "user_tenants": {
-        "auth0|5cc8e4336847810e751aa8ce": [
+        "auth0|5fdacfd9b59fba00698a0856": [
             {
                 "tenant": "cocacola",
                 "role": "admin"
@@ -33,6 +33,17 @@
                 "tenant": "cocacola",
                 "role": "admin"
             }
+        ]
+    },
+    "role_perms": {
+        "admin": [
+            "GET", "POST", "DELETE"
+        ],
+        "poweruser": [
+            "GET", "POST"
+        ],
+        "user": [
+            "GET"
         ]
     }
 }

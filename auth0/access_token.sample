@@ -1,0 +1,13 @@
+Token Payload
+-------------
+{
+  "aud": "http://business-api01",
+  "azp": "bDGV2QbcvDc4hB8N1WdHpr2c2x6CJCXd",
+  "exp": 1608355511,
+  "gty": "password",
+  "http://example.com/authn_loa": "2",
+  "iat": 1608269111,
+  "iss": "https://jv-opa.au.auth0.com/",
+  "scope": "get:resource post:resource delete:resource",
+  "sub": "auth0|5fdacfd9b59fba00698a0856"
+}

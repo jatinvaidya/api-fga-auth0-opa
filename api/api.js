@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
+
 const extAuthz = require('@build-security/opa-express-middleware');
 const expressJwt = require('express-jwt');
 const expressJwtAuthz = require('express-jwt-authz');
@@ -23,16 +24,19 @@ const verifyAccessToken = expressJwt({
         jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
     }),
     // validate aud, iss claims
-    audience: process.env.AUTH0_AUDIENCE,
+    audience: `${process.env.AUTH0_AUDIENCE}`,
     issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256']
 });
 
-const checkCrudResourceScope = expressJwtAuthz(['crud:resource']);
-const checkDeleteTenantScope = expressJwtAuthz(['delete:tenant']);
+const checkGetResourceScope = expressJwtAuthz(['get:resource']);
+const checkPostResourceScope = expressJwtAuthz(['post:resource']);
+const checkDeleteResourceScope = expressJwtAuthz(['delete:resource']);
 
+let opaHost = process.env.OPA_HOST || "localhost";
+let opaPort = process.env.OPA_PORT || 8181;
 const enforceAuthzPolicy = extAuthz((req) => ({
-    authzServer: "http://localhost:8181/v1/data/authz",
+    authzServer: `http://${opaHost}:${opaPort}/v1/data/example`,
 }));
 
 app.use(bodyParser.json());
@@ -46,17 +50,18 @@ app.get('/', (req, res) => {
 
 // private endpoints
 app.get('/api/v1/:tenant/:resource', 
-        verifyAccessToken, checkCrudResourceScope, 
+        verifyAccessToken, checkGetResourceScope, 
         enforceAuthzPolicy, (req, res) => {
     let tenant = req.params.tenant;
     let resource = req.params.resource;
-    let action = (resource === 'upload_token') ? 'VALIDATE' : 'INDEX';
+    let action = req.method;
     let message = 'authorization check success';
     res.json({ tenant, resource, action, message });
 });
 
 app.post('/api/v1/:tenant/:resource', 
-        verifyAccessToken, checkCrudResourceScope, (req, res) => {
+        verifyAccessToken, checkPostResourceScope,
+        enforceAuthzPolicy, (req, res) => {
     let tenant = req.params.tenant;
     let resource = req.params.resource;
     let action = 'CREATE';
@@ -65,7 +70,8 @@ app.post('/api/v1/:tenant/:resource',
 });
 
 app.delete('/api/v1/:tenant', 
-        verifyAccessToken, checkDeleteTenantScope, (req, res) => {
+        verifyAccessToken, checkDeleteResourceScope, 
+        enforceAuthzPolicy, (req, res) => {
     let tenant = req.params.tenant;
     let action = 'DELETE';
     let message = 'authorization check success';
@@ -78,5 +84,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`Now listening on http://localhost:${port}`)
+    console.log(`Now listening on http://${process.env.API_HOST}:${process.env.API_PORT}`)
 });

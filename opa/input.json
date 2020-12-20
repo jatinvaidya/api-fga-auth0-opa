@@ -1,8 +1,9 @@
 {
     "request": {
+        "__note__": "This input is for test purposes only, actual input is generated at runtime from the actual request context",
         "method": "DELETE",
         "query": {},
-        "path": "/api/v1/cocacola",
+        "path": "/api/v1/cocacola/upload_token",
         "scheme": "http",
         "host": "localhost",
         "body": {},

@@ -126,3 +126,59 @@ allow {
     some i
     input.tenant == data.user_tenants[claims.sub][i].tenant
 }
+
+
+opa input:
+{
+    "request": {
+        "method": "DELETE",
+        "query": {},
+        "path": "/api/v1/cocacola",
+        "scheme": "http",
+        "host": "localhost",
+        "body": {},
+        "headers": {
+            "host": "localhost:8000",
+            "user-agent": "curl/7.64.1",
+            "accept": "*/*",
+            "authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhNbmUtMWUyTW5vdUNFeHBlUV9UUiJ9.eyJpc3MiOiJodHRwczovL2p2LW9wYS5hdS5hdXRoMC5jb20vIiwic3ViIjoiMnZ4bG9OaDhKUGpUeXpjcGFST1ZtdkZmQjhBWkxiWk9AY2xpZW50cyIsImF1ZCI6Imh0dHA6Ly9idXNpbmVzcy1hcGkwMSIsImlhdCI6MTYwODE3ODE4OSwiZXhwIjoxNjA4MjY0NTg5LCJhenAiOiIydnhsb05oOEpQalR5emNwYVJPVm12RmZCOEFaTGJaTyIsInNjb3BlIjoiZGVsZXRlOnRlbmFudCBjcnVkOnJlc291cmNlIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.AHiM1vllVeDgzXHhpS7cJU-2sCg3H3aQG7yC2GJttwPkpUYL75aFJvxUK4Ke_oeqmaxCNXrK4R48766yIV-yzqGsWGRmE4dSQB08cdFrANlEZ_k8SZks0cUgdMD4G_Py2cHjbS2oXK04tNydTRpeL_iGAmLT5k0iR5IdkpLD8PDDBuQygUGtCnji7N4Sw3aG0huakpDo3m27SB5g3ti1UMmycjSD620mrB_NaLTP3LJCMlqzSRCvcxMQT_ChFFxDQAJl2SUvNys43SQX5ZmN_X3nRGMKZsy33tUd6qw4H7eWgJCvVJt6vAEHxYzMTSIDb-olgzo5Wc1K9MbPNNFOjA"
+        }
+    },
+    "source": {
+        "port": 57816,
+        "address": "::1"
+    },
+    "destination": {
+        "port": 8000,
+        "address": "::1"
+    }
+}
+
+
+
+
+
+OPA http request/response
+{
+    "client_addr": "172.22.0.1:56188",
+    "level": "info",
+    "msg": "Received request.",
+    "req_body": "{\"input\":{\"request\":{\"method\":\"GET\",\"query\":{},\"path\":\"/api/v1/cocacola/vpc\",\"scheme\":\"http\",\"host\":\"localhost\",\"body\":{},\"headers\":{\"accept\":\"application/json, text/plain, */*\",\"authorization\":\"Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhNbmUtMWUyTW5vdUNFeHBlUV9UUiJ9.eyJodHRwOi8vZXhhbXBsZS5jb20vYXV0aG5fbG9hIjoiMiIsImlzcyI6Imh0dHBzOi8vanYtb3BhLmF1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZmRhY2ZkOWI1OWZiYTAwNjk4YTA4NTYiLCJhdWQiOiJodHRwOi8vYnVzaW5lc3MtYXBpMDEiLCJpYXQiOjE2MDg0MjczMTUsImV4cCI6MTYwODUxMzcxNSwiYXpwIjoiYkRHVjJRYmN2RGM0aEI4TjFXZEhwcjJjMng2Q0pDWGQiLCJzY29wZSI6ImdldDpyZXNvdXJjZSBwb3N0OnJlc291cmNlIGRlbGV0ZTpyZXNvdXJjZSIsImd0eSI6InBhc3N3b3JkIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOnJlc291cmNlIiwiZ2V0OnJlc291cmNlIiwicG9zdDpyZXNvdXJjZSJdfQ.PRUuW3s7AeFR_HCNA7BD1wiDuRP1dUmjDB_6UC9L3fndkMSsxyAVo-d4KWQsnMArqbiAE-a7M8eKRN0UvX23kVbdSjZxSOVNye05Ktm_WJE1iCOW8cNH9b1GCRt_AnBWxmh4Rir_yDcicYKiLo7V78ynOLc5c9CWoOYgG1OU463yZpLkLPULST_Cmphawkn-l8U7xiPLqANZMHP6PdZBlun-l2xHUCs3DLFE4_ujhKlt-UNFBnHsXhqv3cI44tQAgrd6WmqiVpowxEYgESUYJH6eDFfQCW3yzF_KgEi9FLw1P7wDl2V5Ah4BSAUlq0Yc9pdzP1NgOAQ_S5Je3q8DjA\",\"content-type\":\"application/json\",\"user-agent\":\"axios/0.21.0\",\"host\":\"localhost:8000\",\"connection\":\"close\"}},\"source\":{\"port\":60865,\"address\":\"::ffff:127.0.0.1\"},\"destination\":{\"port\":8000,\"address\":\"::ffff:127.0.0.1\"}}}",
+    "req_id": 8,
+    "req_method": "POST",
+    "req_params": {},
+    "req_path": "/v1/data/example",
+    "time": "2020-12-20T01:21:55Z"
+} {
+    "client_addr": "172.22.0.1:56188",
+    "level": "info",
+    "msg": "Sent response.",
+    "req_id": 8,
+    "req_method": "POST",
+    "req_path": "/v1/data/example",
+    "resp_body": "{\"result\":{\"allow\":true,\"bearer_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImhNbmUtMWUyTW5vdUNFeHBlUV9UUiJ9.eyJodHRwOi8vZXhhbXBsZS5jb20vYXV0aG5fbG9hIjoiMiIsImlzcyI6Imh0dHBzOi8vanYtb3BhLmF1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZmRhY2ZkOWI1OWZiYTAwNjk4YTA4NTYiLCJhdWQiOiJodHRwOi8vYnVzaW5lc3MtYXBpMDEiLCJpYXQiOjE2MDg0MjczMTUsImV4cCI6MTYwODUxMzcxNSwiYXpwIjoiYkRHVjJRYmN2RGM0aEI4TjFXZEhwcjJjMng2Q0pDWGQiLCJzY29wZSI6ImdldDpyZXNvdXJjZSBwb3N0OnJlc291cmNlIGRlbGV0ZTpyZXNvdXJjZSIsImd0eSI6InBhc3N3b3JkIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOnJlc291cmNlIiwiZ2V0OnJlc291cmNlIiwicG9zdDpyZXNvdXJjZSJdfQ.PRUuW3s7AeFR_HCNA7BD1wiDuRP1dUmjDB_6UC9L3fndkMSsxyAVo-d4KWQsnMArqbiAE-a7M8eKRN0UvX23kVbdSjZxSOVNye05Ktm_WJE1iCOW8cNH9b1GCRt_AnBWxmh4Rir_yDcicYKiLo7V78ynOLc5c9CWoOYgG1OU463yZpLkLPULST_Cmphawkn-l8U7xiPLqANZMHP6PdZBlun-l2xHUCs3DLFE4_ujhKlt-UNFBnHsXhqv3cI44tQAgrd6WmqiVpowxEYgESUYJH6eDFfQCW3yzF_KgEi9FLw1P7wDl2V5Ah4BSAUlq0Yc9pdzP1NgOAQ_S5Je3q8DjA\",\"claims\":{\"aud\":\"http://business-api01\",\"azp\":\"bDGV2QbcvDc4hB8N1WdHpr2c2x6CJCXd\",\"exp\":1608513715,\"gty\":\"password\",\"http://example.com/authn_loa\":\"2\",\"iat\":1608427315,\"iss\":\"https://jv-opa.au.auth0.com/\",\"permissions\":[\"delete:resource\",\"get:resource\",\"post:resource\"],\"scope\":\"get:resource post:resource delete:resource\",\"sub\":\"auth0|5fdacfd9b59fba00698a0856\"},\"role_perms\":{\"admin\":[\"GET\",\"POST\",\"DELETE\"],\"poweruser\":[\"GET\",\"POST\"],\"user\":[\"GET\"]},\"user_has_some_role_on_tenant\":\"admin\",\"user_tenants\":{\"2vxloNh8JPjTyzcpaROVmvFfB8AZLbZO@clients\":[{\"role\":\"admin\",\"tenant\":\"cocacola\"}],\"auth0|5e716d7148de9f0ca1257252\":[{\"role\":\"admin\",\"tenant\":\"adidas\"},{\"role\":\"user\",\"tenant\":\"chevrolet\"}],\"auth0|5fdacfd9b59fba00698a0856\":[{\"role\":\"admin\",\"tenant\":\"cocacola\"},{\"role\":\"poweruser\",\"tenant\":\"abercrombie\"},{\"role\":\"user\",\"tenant\":\"adidas\"},{\"role\":\"admin\",\"tenant\":\"chevrolet\"}]}}}",
+    "resp_bytes": 1817,
+    "resp_duration": 1.4159,
+    "resp_status": 200,
+    "time": "2020-12-20T01:21:55Z"
+}

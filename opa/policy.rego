@@ -1,48 +1,61 @@
-package com.example.fga.demo
+package example
 
-#HTTP API request
-import input
+# curl --request PUT --url http://localhost:8181/v1/policies/example --data-binary @policy.rego
+# curl --request PUT --url http://localhost:8181/v1/data/example --data-binary @data.json
 
-#deny by default
+# HTTP API request
+import input.request.path
+
+# deny by default
 default allow = false
 
-#allow rules
-
-###### allow user with 'admin' role to...######
-
-###...'DELETE' an entitled 'tenant'
+# allow user with 'admin' role to 'DELETE' a 'resource' from an entitled 'tenant'
 allow {
-    is_delete_method
-    is_user_entitled_to_tenant
-    some i
-    data.user_tenants[claims.sub][i].role == "admin"
-}
-
-is_get_method {
     input.request.method == "GET"
+    role_on_tenant := user_has_some_role_on_tenant
+    role_has_required_perm(role_on_tenant)
 }
 
-is_post_method {
+allow {
     input.request.method == "POST"
+    role_on_tenant := user_has_some_role_on_tenant
+    role_has_required_perm(role_on_tenant)
 }
 
-is_delete_method {
+allow {
     input.request.method == "DELETE"
+    claims["http://example.com/authn_loa"] == "2"
+    role_on_tenant := user_has_some_role_on_tenant
+    role_has_required_perm(role_on_tenant)
 }
 
-is_user_entitled_to_tenant {
-    some tenant
-    input.path = ["api", "v1", tenant]
-
-    some i
-    input.tenant == data.user_tenants[claims.sub][i].tenant
+# extract access_token
+bearer_token := t {
+	v := input.request.headers.authorization
+	startswith(v, "Bearer ")
+	t := substring(v, count("Bearer "), -1)
 }
 
+# parse access_token payload
 claims := payload {
-    [_, payload, _] := io.jwt.decode(input.access_token)
+    [_, payload, _] := io.jwt.decode(bearer_token)
 }
 
-is_user_granted_role {
-    # data.user_tenants[claims.sub][_].role == "admin"
-    data.user_tenants[claims.sub][_].role == "admin"
+# make sure user has some role on the tenant
+# return that role
+user_has_some_role_on_tenant = role_on_tenant {
+    parsed_path := split(input.request.path, "/")
+
+    some input_tenant
+    parsed_path = ["", "api", "v1", input_tenant, _]
+    
+    some i
+    input_tenant == data.example.user_tenants[claims.sub][i].tenant
+    role_on_tenant := data.example.user_tenants[claims.sub][i].role
+}
+
+# make sure the role that the user has on the tenant is entitled 
+# to the action (http method) the user is trying to perform
+role_has_required_perm(role_on_tenant) {
+    data.example.role_perms["admin"][_] == input.request.method
 }
