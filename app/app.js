@@ -52,7 +52,7 @@ let makeApiCall = async () => {
     };
     axios(options)
         .then(response => {
-            console.log(`${response.data}`);
+            console.log(`${JSON.stringify(response.data)}`);
         }).catch(error => console.log(error.message));
 };
 

@@ -31,3 +31,28 @@
     - Using all the info OPA then computes the authorization decision and responds to the API.
 
 5. API honours the decision and allows/denies the request.
+
+## Running the Sample
+
+1. Clone this repo
+   > `git clone https://github.com/jatinvaidya/api-fga-auth0-opa.git`
+
+2. Change to repo folder
+   > `cd api-fga-auth0-opa`
+
+3. Create `app/.env` and `api/.env` files referring to the respective `.env.sample` files.
+
+4. Start `api` and `opa` containers
+   > `docker-compose up`
+   
+5. Feed `policy` and `data` to OPA
+   > `cd opa`
+
+   > `curl --request PUT --url http://localhost:8181/v1/policies/example --data-binary @policy.rego`
+
+   > `curl --request PUT --url http://localhost:8181/v1/data/example --data-binary @data.json`
+
+6. Run the test app with some arguments and check results.
+   > `docker run --net fga-network fga-demo/app-image:latest --username admin01@example.com --password Mju76yhn --tenant cocacola --resource vpc --action GET`
+
+   > `docker run --net fga-network fga-demo/app-image:latest --username user01@example.com --password Mju76yhn --tenant cocacola --resource vpc --action DELETE`
