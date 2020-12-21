@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  api:
+    build: api/
+    ports: 
+      - 8000:8000
+    container_name: fga-demo-api
+    networks: 
+      - fga-network      
+  opa:
+    image: openpolicyagent/opa:latest
+    ports:
+      - 8181:8181
+    command: run --server --log-level debug
+    container_name: fga-demo-opa
+    networks:
+      - fga-network
+
+networks:
+  fga-network:
+    name: fga-network
+  
