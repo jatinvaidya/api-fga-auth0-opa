@@ -52,7 +52,8 @@
 
    > `curl --request PUT --url http://localhost:8181/v1/data/example --data-binary @data.json`
 
-6. Run the test app with some arguments and check results.
+6. Run the test app with some arguments and check results. 
+   See examples below.
    > `docker run --net fga-network fga-demo/app-image:latest --username admin01@example.com --password Mju76yhn --tenant cocacola --resource vpc --action GET`
 
    > `docker run --net fga-network fga-demo/app-image:latest --username user01@example.com --password Mju76yhn --tenant cocacola --resource vpc --action DELETE`
